@@ -1,4 +1,4 @@
-# Placement Portal - Flask Web Application
+# Placement Portal
 
 A comprehensive placement management system built with Flask, SQLite, Bootstrap, and Jinja2.
 
@@ -131,8 +131,6 @@ http://localhost:5000
 Email: admin@placement.com
 Password: admin123
 ```
-
-**Important**: Change the admin password in production!
 
 ## Usage Guide
 
