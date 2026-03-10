@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-file-earmark-text"></i> My Applications</h1>
+    <a href="{{ url_for('student_dashboard') }}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Dashboard
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">Application History ({{ applications|length }})</h5>
+    </div>
+    <div class="card-body">
+        {% if applications %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Company</th>
+                            <th>Job Title</th>
+                            <th>Salary Package</th>
+                            <th>Applied On</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for app in applications %}
+                        <tr>
+                            <td><strong>{{ app.company_name }}</strong></td>
+                            <td>{{ app.job_title }}</td>
+                            <td>{{ app.salary_package }}</td>
+                            <td>{{ app.application_date }}</td>
+                            <td>
+                                {% if app.status == 'selected' %}
+                                    <span class="badge bg-success">
+                                        <i class="bi bi-check-circle"></i> Selected
+                                    </span>
+                                {% elif app.status == 'shortlisted' %}
+                                    <span class="badge bg-info">
+                                        <i class="bi bi-star"></i> Shortlisted
+                                    </span>
+                                {% elif app.status == 'rejected' %}
+                                    <span class="badge bg-danger">
+                                        <i class="bi bi-x-circle"></i> Rejected
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-warning">
+                                        <i class="bi bi-clock"></i> Under Review
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h3 class="text-success">{{ applications|selectattr('status', 'equalto', 'selected')|list|length }}</h3>
+                            <p class="mb-0">Selected</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h3 class="text-info">{{ applications|selectattr('status', 'equalto', 'shortlisted')|list|length }}</h3>
+                            <p class="mb-0">Shortlisted</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h3 class="text-warning">{{ applications|selectattr('status', 'equalto', 'applied')|list|length }}</h3>
+                            <p class="mb-0">Under Review</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h3 class="text-danger">{{ applications|selectattr('status', 'equalto', 'rejected')|list|length }}</h3>
+                            <p class="mb-0">Rejected</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-inbox" style="font-size: 4rem; color: #cbd5e1;"></i>
+                <p class="mt-3 text-muted">You haven't applied to any drives yet</p>
+                <a href="{{ url_for('student_drives') }}" class="btn btn-primary">
+                    <i class="bi bi-briefcase"></i> Browse Available Drives
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

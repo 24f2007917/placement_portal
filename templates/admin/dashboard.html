@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="mb-4"><i class="bi bi-speedometer2"></i> Admin Dashboard</h1>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="stat-card">
+            <h3>{{ total_students }}</h3>
+            <p><i class="bi bi-people-fill"></i> Total Students</p>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="stat-card success">
+            <h3>{{ total_companies }}</h3>
+            <p><i class="bi bi-building"></i> Total Companies</p>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="stat-card warning">
+            <h3>{{ total_drives }}</h3>
+            <p><i class="bi bi-briefcase-fill"></i> Placement Drives</p>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="stat-card info">
+            <h3>{{ total_applications }}</h3>
+            <p><i class="bi bi-file-earmark-text"></i> Applications</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-exclamation-circle"></i> Pending Approvals</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3 p-3 bg-light rounded">
+                    <div>
+                        <h6 class="mb-1">Company Registrations</h6>
+                        <p class="mb-0 text-muted">Waiting for approval</p>
+                    </div>
+                    <div>
+                        <span class="badge bg-warning fs-5">{{ pending_companies }}</span>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                    <div>
+                        <h6 class="mb-1">Placement Drives</h6>
+                        <p class="mb-0 text-muted">Waiting for approval</p>
+                    </div>
+                    <div>
+                        <span class="badge bg-warning fs-5">{{ pending_drives }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-list-check"></i> Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <a href="{{ url_for('admin_companies') }}" class="btn btn-outline-primary w-100 mb-2">
+                    <i class="bi bi-building"></i> Manage Companies
+                </a>
+                <a href="{{ url_for('admin_students') }}" class="btn btn-outline-success w-100 mb-2">
+                    <i class="bi bi-people"></i> Manage Students
+                </a>
+                <a href="{{ url_for('admin_drives') }}" class="btn btn-outline-warning w-100 mb-2">
+                    <i class="bi bi-briefcase"></i> Manage Drives
+                </a>
+                <a href="{{ url_for('admin_applications') }}" class="btn btn-outline-info w-100">
+                    <i class="bi bi-file-earmark-text"></i> View All Applications
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

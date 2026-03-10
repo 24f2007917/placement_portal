@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="mb-4"><i class="bi bi-building"></i> {{ company.company_name }} Dashboard</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="stat-card">
+            <h3>{{ total_drives }}</h3>
+            <p><i class="bi bi-briefcase-fill"></i> Total Drives</p>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="stat-card success">
+            <h3>{{ approved_drives }}</h3>
+            <p><i class="bi bi-check-circle-fill"></i> Approved Drives</p>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="stat-card info">
+            <h3>{{ total_applicants }}</h3>
+            <p><i class="bi bi-people-fill"></i> Total Applicants</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-info-circle"></i> Company Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Industry:</strong> {{ company.industry }}</p>
+                <p><strong>Website:</strong> 
+                    {% if company.website %}
+                        <a href="{{ company.website }}" target="_blank">{{ company.website }}</a>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </p>
+                <p><strong>Contact Person:</strong> {{ company.contact_person }}</p>
+                <p><strong>Phone:</strong> {{ company.phone }}</p>
+                <p class="mb-0"><strong>Address:</strong> {{ company.address }}</p>
+                
+                <hr>
+                
+                <a href="{{ url_for('company_profile') }}" class="btn btn-primary">
+                    <i class="bi bi-pencil"></i> Edit Profile
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-list-check"></i> Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <a href="{{ url_for('create_drive') }}" class="btn btn-success w-100 mb-3">
+                    <i class="bi bi-plus-circle"></i> Create New Placement Drive
+                </a>
+                <a href="{{ url_for('company_drives') }}" class="btn btn-outline-primary w-100 mb-3">
+                    <i class="bi bi-briefcase"></i> View My Drives
+                </a>
+                <a href="{{ url_for('company_profile') }}" class="btn btn-outline-secondary w-100">
+                    <i class="bi bi-person-circle"></i> Manage Profile
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

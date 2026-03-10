@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-people"></i> Applicants for {{ drive.job_title }}</h1>
+    <a href="{{ url_for('company_drives') }}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Drives
+    </a>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Drive Details</h5>
+                <p><strong>Salary Package:</strong> {{ drive.salary_package }}</p>
+                <p><strong>Minimum CGPA:</strong> {{ drive.min_cgpa if drive.min_cgpa else 'N/A' }}</p>
+                <p><strong>Deadline:</strong> {{ drive.deadline }}</p>
+            </div>
+            <div class="col-md-6">
+                <h5>Statistics</h5>
+                <p><strong>Total Applicants:</strong> {{ applicants|length }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">All Applicants ({{ applicants|length }})</h5>
+    </div>
+    <div class="card-body">
+        {% if applicants %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Roll Number</th>
+                            <th>Department</th>
+                            <th>CGPA</th>
+                            <th>Phone</th>
+                            <th>Resume</th>
+                            <th>Applied On</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for applicant in applicants %}
+                        <tr>
+                            <td><strong>{{ applicant.name }}</strong></td>
+                            <td>{{ applicant.roll_number }}</td>
+                            <td>{{ applicant.department }}</td>
+                            <td>
+                                <span class="badge {% if applicant.cgpa >= 8 %}bg-success{% elif applicant.cgpa >= 6 %}bg-warning{% else %}bg-secondary{% endif %}">
+                                    {{ applicant.cgpa }}
+                                </span>
+                            </td>
+                            <td>{{ applicant.phone }}</td>
+                            <td>
+                                {% if applicant.resume_path %}
+                                    <a href="{{ url_for('uploaded_file', filename=applicant.resume_path) }}" 
+                                       target="_blank" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-file-earmark-pdf"></i> View
+                                    </a>
+                                {% else %}
+                                    <span class="text-muted">N/A</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ applicant.application_date }}</td>
+                            <td>
+                                {% if applicant.status == 'selected' %}
+                                    <span class="badge bg-success">Selected</span>
+                                {% elif applicant.status == 'shortlisted' %}
+                                    <span class="badge bg-info">Shortlisted</span>
+                                {% elif applicant.status == 'rejected' %}
+                                    <span class="badge bg-danger">Rejected</span>
+                                {% else %}
+                                    <span class="badge bg-warning">Applied</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if applicant.status != 'selected' %}
+                                    <a href="{{ url_for('update_application_status', app_id=applicant.id, status='shortlisted') }}" 
+                                       class="btn btn-sm btn-info">
+                                        <i class="bi bi-star"></i> Shortlist
+                                    </a>
+                                {% endif %}
+                                
+                                {% if applicant.status != 'selected' %}
+                                    <a href="{{ url_for('update_application_status', app_id=applicant.id, status='selected') }}" 
+                                       class="btn btn-sm btn-success">
+                                        <i class="bi bi-check-circle"></i> Select
+                                    </a>
+                                {% endif %}
+                                
+                                {% if applicant.status != 'rejected' %}
+                                    <a href="{{ url_for('update_application_status', app_id=applicant.id, status='rejected') }}" 
+                                       class="btn btn-sm btn-danger">
+                                        <i class="bi bi-x-circle"></i> Reject
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-inbox" style="font-size: 4rem; color: #cbd5e1;"></i>
+                <p class="mt-3 text-muted">No applications received yet</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1><i class="bi bi-briefcase"></i> My Placement Drives</h1>
+    <div>
+        <a href="{{ url_for('create_drive') }}" class="btn btn-success me-2">
+            <i class="bi bi-plus-circle"></i> Create New Drive
+        </a>
+        <a href="{{ url_for('company_dashboard') }}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Dashboard
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">All Drives ({{ drives|length }})</h5>
+    </div>
+    <div class="card-body">
+        {% if drives %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Job Title</th>
+                            <th>Min CGPA</th>
+                            <th>Salary</th>
+                            <th>Deadline</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for drive in drives %}
+                        <tr>
+                            <td><strong>{{ drive.job_title }}</strong></td>
+                            <td>
+                                {% if drive.min_cgpa %}
+                                    <span class="badge bg-info">{{ drive.min_cgpa }}</span>
+                                {% else %}
+                                    <span class="text-muted">N/A</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ drive.salary_package }}</td>
+                            <td>{{ drive.deadline }}</td>
+                            <td>
+                                {% if drive.status == 'approved' %}
+                                    <span class="badge bg-success">Approved</span>
+                                {% elif drive.status == 'rejected' %}
+                                    <span class="badge bg-danger">Rejected</span>
+                                {% elif drive.status == 'closed' %}
+                                    <span class="badge bg-secondary">Closed</span>
+                                {% else %}
+                                    <span class="badge bg-warning">Pending Approval</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if drive.status in ['pending', 'approved'] %}
+                                    <a href="{{ url_for('edit_drive', drive_id=drive.id) }}" 
+                                       class="btn btn-sm btn-primary">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+                                {% endif %}
+                                
+                                {% if drive.status == 'approved' %}
+                                    <a href="{{ url_for('drive_applicants', drive_id=drive.id) }}" 
+                                       class="btn btn-sm btn-info">
+                                        <i class="bi bi-people"></i> Applicants
+                                    </a>
+                                    <a href="{{ url_for('close_drive', drive_id=drive.id) }}" 
+                                       class="btn btn-sm btn-warning">
+                                        <i class="bi bi-x-circle"></i> Close
+                                    </a>
+                                {% endif %}
+                                
+                                <button class="btn btn-sm btn-secondary" data-bs-toggle="collapse" 
+                                        data-bs-target="#details-{{ drive.id }}">
+                                    <i class="bi bi-eye"></i> Details
+                                </button>
+                            </td>
+                        </tr>
+                        <tr class="collapse" id="details-{{ drive.id }}">
+                            <td colspan="6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6>Description:</h6>
+                                        <p>{{ drive.description }}</p>
+                                        
+                                        <h6>Eligibility Criteria:</h6>
+                                        <p>{{ drive.eligibility_criteria }}</p>
+                                        
+                                        <p class="mb-0">
+                                            <strong>Created:</strong> {{ drive.created_at }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-inbox" style="font-size: 4rem; color: #cbd5e1;"></i>
+                <p class="mt-3 text-muted">No drives created yet</p>
+                <a href="{{ url_for('create_drive') }}" class="btn btn-success">
+                    <i class="bi bi-plus-circle"></i> Create Your First Drive
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

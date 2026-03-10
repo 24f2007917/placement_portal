@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="display-3 fw-bold mb-4" style="color: #2563eb;">Welcome to Placement Portal</h1>
+    <p class="lead mb-5" style="color: #64748b;">Connect Students with Career Opportunities</p>
+    
+    <div class="row g-4 mt-5">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <i class="bi bi-person-circle" style="font-size: 4rem; color: #2563eb;"></i>
+                    </div>
+                    <h3 class="card-title">For Students</h3>
+                    <p class="card-text">Find your dream job through campus placements</p>
+                    <a href="{{ url_for('register', role='student') }}" class="btn btn-primary">
+                        Register as Student
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <i class="bi bi-building" style="font-size: 4rem; color: #16a34a;"></i>
+                    </div>
+                    <h3 class="card-title">For Companies</h3>
+                    <p class="card-text">Recruit talented students for your organization</p>
+                    <a href="{{ url_for('register', role='company') }}" class="btn btn-success">
+                        Register as Company
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3">
+                        <i class="bi bi-shield-lock" style="font-size: 4rem; color: #dc2626;"></i>
+                    </div>
+                    <h3 class="card-title">Admin Access</h3>
+                    <p class="card-text">Manage the entire placement process</p>
+                    <a href="{{ url_for('login') }}" class="btn btn-danger">
+                        Admin Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-5 pt-5">
+        <h2 class="mb-4">Already have an account?</h2>
+        <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">
+            <i class="bi bi-box-arrow-in-right"></i> Login Here
+        </a>
+    </div>
+</div>
+
+<div class="row mt-5 pt-5">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body p-5">
+                <h2 class="text-center mb-4">How It Works</h2>
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <i class="bi bi-person-plus-fill" style="font-size: 3rem; color: #2563eb;"></i>
+                        <h5 class="mt-3">1. Register</h5>
+                        <p>Students and companies create accounts</p>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="bi bi-check-circle-fill" style="font-size: 3rem; color: #16a34a;"></i>
+                        <h5 class="mt-3">2. Approval</h5>
+                        <p>Admin approves registrations</p>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="bi bi-briefcase-fill" style="font-size: 3rem; color: #ea580c;"></i>
+                        <h5 class="mt-3">3. Post Drives</h5>
+                        <p>Companies create placement drives</p>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="bi bi-file-earmark-text-fill" style="font-size: 3rem; color: #7c3aed;"></i>
+                        <h5 class="mt-3">4. Apply</h5>
+                        <p>Students apply for opportunities</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

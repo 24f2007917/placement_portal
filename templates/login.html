@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header text-center">
+                <h3><i class="bi bi-box-arrow-in-right"></i> Login</h3>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-box-arrow-in-right"></i> Login
+                    </button>
+                </form>
+                
+                <hr class="my-4">
+                
+                <div class="text-center">
+                    <p class="mb-2">Don't have an account?</p>
+                    <a href="{{ url_for('register', role='student') }}" class="btn btn-outline-primary btn-sm me-2">
+                        Register as Student
+                    </a>
+                    <a href="{{ url_for('register', role='company') }}" class="btn btn-outline-success btn-sm">
+                        Register as Company
+                    </a>
+                </div>
+                
+                <div class="alert alert-info mt-3">
+                    <strong>Admin Login:</strong><br>
+                    Email: admin@placement.com<br>
+                    Password: admin123
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

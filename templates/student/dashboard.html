@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="mb-4"><i class="bi bi-person-circle"></i> Student Dashboard</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="stat-card">
+            <h3>{{ total_applications }}</h3>
+            <p><i class="bi bi-file-earmark-text"></i> Total Applications</p>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="stat-card success">
+            <h3>{{ selected_count }}</h3>
+            <p><i class="bi bi-check-circle-fill"></i> Selected</p>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="stat-card info">
+            <h3>{{ shortlisted_count }}</h3>
+            <p><i class="bi bi-star-fill"></i> Shortlisted</p>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-person-badge"></i> My Profile</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Name:</strong> {{ student.name }}</p>
+                <p><strong>Roll Number:</strong> {{ student.roll_number }}</p>
+                <p><strong>Department:</strong> {{ student.department }}</p>
+                <p><strong>CGPA:</strong> 
+                    <span class="badge {% if student.cgpa >= 8 %}bg-success{% elif student.cgpa >= 6 %}bg-warning{% else %}bg-secondary{% endif %}">
+                        {{ student.cgpa }}
+                    </span>
+                </p>
+                <p><strong>Phone:</strong> {{ student.phone }}</p>
+                <p class="mb-0"><strong>Resume:</strong> 
+                    {% if student.resume_path %}
+                        <a href="{{ url_for('uploaded_file', filename=student.resume_path) }}" target="_blank">View Resume</a>
+                    {% else %}
+                        <span class="text-danger">Not Uploaded</span>
+                    {% endif %}
+                </p>
+                
+                <hr>
+                
+                <a href="{{ url_for('student_profile') }}" class="btn btn-primary">
+                    <i class="bi bi-pencil"></i> Edit Profile
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-list-check"></i> Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <a href="{{ url_for('student_drives') }}" class="btn btn-success w-100 mb-3">
+                    <i class="bi bi-briefcase"></i> Browse Available Drives
+                </a>
+                <a href="{{ url_for('student_applications') }}" class="btn btn-outline-primary w-100 mb-3">
+                    <i class="bi bi-file-earmark-text"></i> View My Applications
+                </a>
+                <a href="{{ url_for('student_profile') }}" class="btn btn-outline-secondary w-100">
+                    <i class="bi bi-person-circle"></i> Update Profile & Resume
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
